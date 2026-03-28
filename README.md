@@ -94,4 +94,4 @@ TODO
 ### Organization of classes, files, and possible project layers
 
 # How to run the project
-TODO
+You have to clone repository and then using terminal navigate to folder `apbd2` and there you can run the project using command `dotnet run`. 
