@@ -31,7 +31,7 @@ public static class UserRepo
         }
     }
 
-    public static void createUserEntry(string userType, string userName, string firstName, string lastName)
+    public static void createUserEntry(string userType, string firstName, string lastName)
     {
         User newUser;
 

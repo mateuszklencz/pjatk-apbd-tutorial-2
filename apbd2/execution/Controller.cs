@@ -13,7 +13,7 @@ public static class Controller
     {
         try
         {
-            UserRepo.createUserEntry(userType, "", firstName, lastName);
+            UserRepo.createUserEntry(userType, firstName, lastName);
             Console.WriteLine($"User {firstName} {lastName} added successfully as {userType}.");
         }
         catch (Exception ex)
