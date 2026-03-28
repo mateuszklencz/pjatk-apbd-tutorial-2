@@ -1,4 +1,4 @@
-# pjatk-apbd-tutorial-2
+# PJATK-APBD-TUTORIAL-2
 Repo for task 2 from Computer Science major in Polish-Japanese Academy of Information Technology (PJATK) for course Database Applications . 
 
 # Task & Requirements
@@ -84,16 +84,71 @@ limit.
 7. Displaying a final report of the system stat
 
 
-# Project description and design decisions
-## Project description
-TODO
-## Design decisions
-TODO
-### Cohesion, coupling, and class responsibilities
-TODO 
-### Organization of classes, files, and possible project layers
+# Project Description and Design Decisions
 
-# How to run the project
-You have to clone repository and then using terminal navigate to folder `apbd2` and there you can run the project using command `dotnet run`. 
+## Project Description
+This project was developed in accordance with the specified requirements. It comprises several classes representing various equipment types, users, and the core business logic governing the rental and return processes. The system is divided into distinct layers to ensure better code organization and a clear separation of concerns.
 
-First we add few equipment items of different types and few users of different types. Then we demonstrate correct rental operation, attempted invalid operation, return completed on time, delayed return that leads to a penalty and finally displaying a final 
+The primary objective was to fulfill the required functional logic. This logic is primarily **encapsulated** within the central controller class: `execution/Controller.cs`.
+
+To manage data persistence and object storage, I implemented specialized "ObjectRepo" classes to serve as the data backbone of the application.
+
+**GitHub Repository:** [https://github.com/mateuszklencz/pjatk-apbd-tutorial-2](https://github.com/mateuszklencz/pjatk-apbd-tutorial-2)
+
+---
+
+## Design Decisions
+
+### Cohesion, Coupling, and Class Responsibilities
+I aimed to minimize coupling wherever possible and introduced a dedicated **Repository Layer** for data management. While the `Controller` class is currently larger than ideal, time constraints prevented further decomposition into smaller services. However, I ensured that every method within this class has a single, well-defined responsibility and follows clear naming conventions to maintain readability.
+
+The project also features `Interface` and `InterfaceDemonstration` classes:
+* **Interface:** Responsible for direct user interaction and menu navigation.
+* **InterfaceDemonstration:** Manages a predefined demonstration scenario. 
+
+`InterfaceDemonstration` is not a logical part of the programme but only way of proving that the business logic works as intended. In task requirements, it is stated that the demonstration should be implemented in `Main` or in a console menu. I chose to implement it in a separate class to keep `Main` clean and focused on execution flow. I believe it is also easier to check how testing scenarios are defined in `InterfaceDemonstration` than if it would be squeezed in `Main`. 
+
+   Also, I believe the struture of inheritance of classess is justified by the domain model and is not just a way to make the solution look more object-oriented. For example, `Equipment` is a base class for all equipment types because they share common properties and behaviors, while specific equipment types like `Laptop`, `Projector`, and `Camera` inherit from it to add their unique attributes. The same stands for User and its subclasses `Student` and `Employee`. 
+
+### Project Structure and Layering
+The project follows a layered architecture to improve maintainability:
+
+* **Execution:** Contains the `Controller` class, which handles business logic and data operations.
+* **Interface:** Manages user interaction, including menu displays and input collection.
+* **Model:** Contains domain-specific entities (Equipment, Users, and Rentals).
+
+For better organization, I implemented sub-directories within the `Model` folder (e.g., `equipment`, `user`). 
+
+### Identified Limitations & Future Improvements
+Due to time constraints, I have identified the following areas for potential refactoring:
+* **Generic Repositories:** Classes like `RentalRepo` and `UserRepo` could be refactored into a single abstract `BaseRepository<T>`. This would eliminate code duplication by using generic methods such as `AddEntry()` and `GetById()`.
+* **Domain Complexity:** The project scope was more extensive than initially anticipated. As a result, some model classes meet only the minimum requirements (e.g., providing only two specific fields for `Equipment` types).
+
+---
+
+# How to Run the Project
+
+1.  **Clone** the repository.
+2.  Navigate to the `apbd2` directory via your terminal.
+3.  Execute the project using the command:
+    ```bash
+    dotnet run
+    ```
+
+### Demonstrating Functionality
+To see the system in action, please select **"11. Run Full Demonstration"** from the Console menu. 
+
+* This will execute the scenario described in the assignment. 
+
+    1. Adding several equipment items of different types. 
+    2. Adding several users of different types. 
+    3. A correct rental operation. 
+    4. An attempted invalid operation, for example renting unavailable equipment or exceeding a user limit. 
+    5. A return completed on time. 
+    6. A delayed return that leads to a penalty. 
+    7. Displaying a final report of the system state.
+
+* The console will display a detailed log of operations proving that all business logic is functional. 
+
+
+* **Note:** The demonstration uses hardcoded data. If you wish to test manual input, you may use the other menu options after the demonstration has concluded.
