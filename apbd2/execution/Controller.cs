@@ -36,7 +36,9 @@ public static class Controller
         int brightnessLumen = 0,
         bool isBluetooth = false)
     {
-        EquipmentRepo.createEquipmentEntry(
+        try
+        {
+            EquipmentRepo.createEquipmentEntry(
             equipmentType,
             name,
             boughtPrice,
@@ -48,6 +50,13 @@ public static class Controller
             cameraType,
             brightnessLumen,
             isBluetooth);
+
+            Console.WriteLine($"Equipment {name} added successfully as {equipmentType}.");
+        }
+        catch (Exception ex)
+        {
+            Console.WriteLine($"Failed to add equipment: {ex.Message}");
+        }
     }
 
     // 3. Display the full list of equipment together with current status
@@ -108,7 +117,13 @@ public static class Controller
         if (!equipment.IsAvailable || equipment.IsRented) return false;
 
         int activeRentalsCount = GetActiveRentalsCountForUser(userName);
+
+        Console.WriteLine($"User {userName} currently has {activeRentalsCount} active rentals.");
+
         int maxRentals = GetMaxRentalsForUser(user);
+
+        Console.WriteLine($"User {userName} can have max {maxRentals} active rentals.");
+
         if (activeRentalsCount >= maxRentals) return false;
 
         // mark equipment as rented and let the repo create and store the rental

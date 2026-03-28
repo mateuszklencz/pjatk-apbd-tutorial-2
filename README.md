@@ -95,3 +95,5 @@ TODO
 
 # How to run the project
 You have to clone repository and then using terminal navigate to folder `apbd2` and there you can run the project using command `dotnet run`. 
+
+First we add few equipment items of different types and few users of different types. Then we demonstrate correct rental operation, attempted invalid operation, return completed on time, delayed return that leads to a penalty and finally displaying a final 

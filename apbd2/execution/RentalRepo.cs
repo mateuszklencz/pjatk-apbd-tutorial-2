@@ -36,6 +36,8 @@ public static class RentalRepo
     {
         Rental newRental = new Rental(rentalDate, dueDate, rentedTo, rentedItem, null);
 
+
+
         addRental(newRental);
     }
 

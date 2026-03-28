@@ -19,6 +19,7 @@ public class Rental
         ActualReturn = actualReturn;
 
         this.Id = GenerateId(rentedItem, rentedTo);
+        this.IsActive = true;
     }
 
     // because GUID wasn't easy to use in this context, we will generate a meaningful ID based on the rental date and the rented item
