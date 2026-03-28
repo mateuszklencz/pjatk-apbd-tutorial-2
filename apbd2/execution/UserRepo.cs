@@ -11,14 +11,14 @@ public static class UserRepo
         _users[user.UserName] = user;
     }
 
-    public static User getUser(string userName)
+    public static User? getUser(string userName)
     {
         return _users.ContainsKey(userName) ? _users[userName] : null;
     }
 
     public static List<User> getAllUsers()
     {
-        return _users.Values.ToList();
+        return new List<User>(_users.Values);
     }
 
     public static void displayAllUsers()
@@ -29,5 +29,26 @@ public static class UserRepo
             user.DisplayInfo();
             Console.WriteLine();
         }
+    }
+
+    public static void createUserEntry(string userType, string userName, string firstName, string lastName)
+    {
+        User newUser;
+
+        if (userType == "Student")
+        {
+            newUser = new Student(firstName, lastName);
+        }
+        else if (userType == "Employee")
+        {
+            newUser = new Employee(firstName, lastName);
+        }
+        else
+        {
+            Console.WriteLine($"Unknown user type: {userType}. Defaulting to Student.");
+            newUser = new Student(firstName, lastName);
+        }
+
+        addUser(newUser);
     }
 }

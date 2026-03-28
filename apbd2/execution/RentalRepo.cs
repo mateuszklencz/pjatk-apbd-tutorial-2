@@ -31,4 +31,21 @@ public static class RentalRepo
             Console.WriteLine();
         }
     }
+
+    public static void createRentalEntry(DateOnly rentalDate, DateOnly dueDate, User rentedTo, Equipment rentedItem)
+    {
+        Rental newRental = new Rental(rentalDate, dueDate, rentedTo, rentedItem, null);
+
+        addRental(newRental);
+    }
+
+    public static void terminateRental(Guid rentalId, DateOnly actualReturnDate)
+    {
+        Rental rental = getRental(rentalId);
+        if (rental != null && rental.IsActive)
+        {
+            rental.ActualReturn = actualReturnDate;
+            rental.IsActive = false;
+        }
+    }
 }

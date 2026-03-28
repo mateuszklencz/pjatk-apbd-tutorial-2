@@ -6,6 +6,7 @@ public class Rental
     public DateOnly RentalDate { get; set; }
     public DateOnly DueDate { get; set; }
     public DateOnly? ActualReturn { get; set; }
+    public bool IsActive { get; set; }
 
     public User RentedTo { get; set; }
     public Equipment RentedItem { get; set; }
