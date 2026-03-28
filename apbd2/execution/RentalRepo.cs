@@ -4,15 +4,15 @@ using System.Linq;
 
 public static class RentalRepo
 {
-    static private Dictionary<Guid, Rental> _rentals = new();
+    static private Dictionary<string, Rental> _rentals = new();
 
     public static void addRental(Rental rental)
     {
         // use the InstanceId property from Rental
-        _rentals[rental.InstanceId] = rental;
+        _rentals[rental.Id] = rental;
     }
 
-    public static Rental getRental(Guid guid)
+    public static Rental getRental(string guid)
     {
         return _rentals.ContainsKey(guid) ? _rentals[guid] : null;
     }
@@ -39,7 +39,7 @@ public static class RentalRepo
         addRental(newRental);
     }
 
-    public static void terminateRental(Guid rentalId, DateOnly actualReturnDate)
+    public static void terminateRental(string rentalId, DateOnly actualReturnDate)
     {
         Rental rental = getRental(rentalId);
         if (rental != null && rental.IsActive)

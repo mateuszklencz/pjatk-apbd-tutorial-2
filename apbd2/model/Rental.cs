@@ -1,7 +1,6 @@
 public class Rental
 {
-    public Guid InstanceId { get; } = Guid.NewGuid(); // https://learn.microsoft.com/pl-pl/dotnet/api/system.guid.newguid?view=net-9.0
-                                                      // value will be something like e150e1ec-5285-49f0-96c5-d78a4904555c
+    public string Id { get; init; } 
 
     public DateOnly RentalDate { get; set; }
     public DateOnly DueDate { get; set; }
@@ -18,7 +17,23 @@ public class Rental
         RentedTo = rentedTo;
         RentedItem = rentedItem;
         ActualReturn = actualReturn;
+
+        this.Id = GenerateId(rentedItem, rentedTo);
     }
+
+    // because GUID wasn't easy to use in this context, we will generate a meaningful ID based on the rental date and the rented item
+    // and rental person - this way we can easily identify the rental without needing to look up a GUID
+    private string GenerateId(Equipment eq, User user)
+    {
+        string datePart = RentalDate.ToString("yyyyMMdd");
+
+        string itemPart = eq.Id.ToString();
+        string userPart = user.UserName;
+
+        // it should generate something like 20240615-3-jdoe for a rental made on June 15, 2024, for item with ID 3 by user with username jdoe
+        return $"{datePart}-{itemPart}-{userPart}";
+    }
+    
 
     public double CalculateRentalFee()
     {
@@ -39,7 +54,7 @@ public class Rental
 
     public void DisplayInfo()
     {
-        Console.WriteLine($"Rental ID: {InstanceId}");
+        Console.WriteLine($"Rental ID: {Id}");
         Console.WriteLine($"Rental Date: {RentalDate}");
         Console.WriteLine($"Due Date:     {DueDate}");
         Console.WriteLine($"Actual Return:{(ActualReturn.HasValue ? ActualReturn.Value.ToString() : "N/A")}");
